@@ -48,6 +48,22 @@ public class CategoriaService {
         categoriaRepo.delete(categoria);
     }
 
+    @Transactional
+    public void deleteCanale(Long id) {
+        Categoria categoria = categoriaRepo.findById(id).orElse(null);
+
+        // Rimuove il canale da tutti i programmi associati
+        for (Programma programma : categoria.getProgrammi()) {
+            programma.getCategorie().remove(categoria);
+        }
+
+        // Salva i programmi per aggiornare il DB
+        programmaRepo.saveAll(categoria.getProgrammi());
+
+        // Ora puoi eliminare il canale
+        categoriaRepo.delete(categoria);
+    }
+
     public Categoria save(Categoria categoria) {
         return categoriaRepo.save(categoria);
     }
