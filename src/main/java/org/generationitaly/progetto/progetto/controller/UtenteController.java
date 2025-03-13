@@ -1,9 +1,11 @@
 package org.generationitaly.progetto.progetto.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.generationitaly.progetto.progetto.entity.Categoria;
-import org.generationitaly.progetto.progetto.service.CategoriaService;
+import org.generationitaly.progetto.progetto.entity.Programma;
+import org.generationitaly.progetto.progetto.entity.Utente;
+import org.generationitaly.progetto.progetto.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,60 +21,71 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/api/categoria")
-public class CategoriaController {
+@RequestMapping("/api/utente")
+public class UtenteController {
 
     @Autowired
-    private CategoriaService categoriaService;
+    private UtenteService utenteService;
 
-    @GetMapping("/categorie")
-    public ResponseEntity<?> getCategoria() {
+    @GetMapping("/utenti")
+    public ResponseEntity<?> getUtenti() {
         try {
-            List<Categoria> categorie = categoriaService.findall();
-            return ResponseEntity.ok(categorie);
+            List<Utente> utenti = utenteService.findall();
+            return ResponseEntity.ok(utenti);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/categoria/{id}")
+    @GetMapping("/utente/{id}")
     public ResponseEntity<?> getCanale(@PathVariable Long id) {
         try {
-            Categoria categoria = categoriaService.findById(id);
-            return ResponseEntity.ok(categoria);
+            Utente utente = utenteService.findById(id);
+            return ResponseEntity.ok(utente);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/aggiungiCategoria")
-    public ResponseEntity<?> salvaCategoria(@RequestBody Categoria categoria) {
+    @PostMapping("/aggiungiUtente")
+    public ResponseEntity<?> salvaUtente(@RequestBody Utente utente) {
         try {
-            categoriaService.save(categoria);
-            return ResponseEntity.ok(categoria);
+            if (!utente.getProgrammiPref().isEmpty()) {
+                List<Programma> programmi = new ArrayList<>();
+                for (int i = 0; i < utente.getProgrammiPref().size(); i++) {
+                    Programma p = utente.getProgrammiPref().get(i);
+                    programmi.add(p);
+                }
+                for (int i = 0; i < utente.getProgrammiPref().size(); i++) {
+                    utente.getProgrammiPref().get(i).getUtenti().add(utente);
+                }
+            }
+            utenteService.save(utente);
+            return ResponseEntity.ok(utente);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/modificaCategoria/{id}")
-    public ResponseEntity<?> modificaCategoria(@PathVariable Long id, @RequestBody Categoria categoriaM) {
+    @PutMapping("/modificaUtente/{id}")
+    public ResponseEntity<?> modificaUtente(@PathVariable Long id, @RequestBody Utente utenteM) {
         try {
-            Categoria categoria = categoriaService.findById(id);
-            categoria.setNomeCategoria(categoriaM.getNomeCategoria());
-
-            categoriaService.save(categoria);
+            Utente utente = utenteService.findById(id);
+            utente.setNome(utenteM.getNome());
+            utente.setCognome(utenteM.getCognome());
+            utente.setNumero(utenteM.getNumero());
+            utente.setProgrammiPref(utenteM.getProgrammiPref());
+            utenteService.save(utente);
             return new ResponseEntity<>(HttpStatus.OK);
-
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/eliminaCategoria/{id}")
+    @DeleteMapping("/eliminaUtente/{id}")
     public ResponseEntity<?> deleteCategoria(@PathVariable Long id) {
         try {
-            categoriaService.deleteCategoria(id);
+            utenteService.deleteUtente(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

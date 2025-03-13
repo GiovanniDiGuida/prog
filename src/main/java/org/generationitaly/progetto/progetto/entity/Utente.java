@@ -3,7 +3,6 @@ package org.generationitaly.progetto.progetto.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +13,6 @@ import jakarta.persistence.ManyToMany;
 @Entity
 public class Utente {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +26,6 @@ public class Utente {
     @Column(length = 64)
     private String numero;
 
-    
     @ManyToMany(mappedBy = "utenti")
     private List<Programma> programmiPref;
 

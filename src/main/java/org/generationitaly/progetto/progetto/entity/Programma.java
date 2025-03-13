@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -15,7 +16,7 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Programma {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,15 +30,13 @@ public class Programma {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime orario;
 
-    
     @ManyToMany
     private List<Canale> canali;
 
-    
+    @JsonBackReference("lista_utenti")
     @ManyToMany
     private List<Utente> utenti;
 
-    
     @ManyToMany
     private List<Categoria> categorie;
 
