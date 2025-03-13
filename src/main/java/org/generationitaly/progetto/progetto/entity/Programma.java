@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
@@ -33,7 +34,7 @@ public class Programma {
     @ManyToMany
     private List<Canale> canali;
 
-    
+    @JsonBackReference("lista_utenti")
     @ManyToMany
     private List<Utente> utenti;
 
