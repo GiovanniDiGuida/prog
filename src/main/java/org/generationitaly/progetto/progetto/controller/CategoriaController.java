@@ -60,7 +60,7 @@ public class CategoriaController {
     @PostMapping("/aggiungiCategoria")
     public ResponseEntity<?> aggiungiCategoria(@RequestBody Categoria categoria) {
         try {
-            if (categoria.getNomeCategoria().isEmpty()){
+            if (categoria.getNomeCategoria()==null){
                 categoria.setNomeCategoria("Nome categoria inesistente");
             }
             categoriaService.save(categoria);

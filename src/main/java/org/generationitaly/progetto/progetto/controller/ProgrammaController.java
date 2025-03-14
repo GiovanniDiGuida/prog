@@ -73,11 +73,11 @@ public class ProgrammaController {
     @PostMapping("/aggiungiProgramma")
     public ResponseEntity<?> salvaProgramma(@RequestBody Programma programma){
         try {
-            if (programma.getTitolo().isEmpty()){
+            if (programma.getTitolo()==null){
                 programma.setTitolo("Titolo inesistente");
             }
 
-            if(programma.getDescrizione().isEmpty()){
+            if(programma.getDescrizione()==null){
                 programma.setDescrizione("Descrizione inesistente");
             }
             programmaService.save(programma);
@@ -102,7 +102,7 @@ public class ProgrammaController {
             }else {
                 programma.setDescrizione(programmaM.getDescrizione());
             }
-            programma.setDescrizione(programmaM.getDescrizione());
+            
             programma.setOrario(programma.getOrario());
             programma.setCategorie(programmaM.getCategorie());
             programma.setUtenti(programmaM.getUtenti());

@@ -63,7 +63,7 @@ public class CanaleController {
     @PostMapping("/aggiungiCanale")
     public ResponseEntity<?> salvaCanale(@RequestBody Canale canale){
         try {
-            if (canale.getNomeCanale().isEmpty()){
+            if (canale.getNomeCanale()==null){
                 canale.setNomeCanale("Nome canale inesistente");
             }
             canaleService.save(canale);
