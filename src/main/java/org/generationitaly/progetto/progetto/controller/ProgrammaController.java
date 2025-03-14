@@ -49,6 +49,13 @@ public class ProgrammaController {
     @PostMapping("/aggiungiProgramma")
     public ResponseEntity<?> salvaProgramma(@RequestBody Programma programma){
         try {
+            if (programma.getTitolo().isEmpty()){
+                programma.setTitolo("Titolo inesistente");
+            }
+
+            if(programma.getDescrizione().isEmpty()){
+                programma.setDescrizione("Descrizione inesistente");
+            }
             programmaService.save(programma);
             return ResponseEntity.ok(programma);
         } catch (Exception e) {
@@ -60,7 +67,17 @@ public class ProgrammaController {
     public ResponseEntity<?> modificaCategoria(@PathVariable Long id, @RequestBody Programma programmaM){
         try {
             Programma programma = programmaService.findById(id);
-            programma.setTitolo(programmaM.getTitolo());
+            if(programmaM.getTitolo().isEmpty()){
+                programma.setTitolo("Titolo inesistente");
+            }else{
+                programma.setTitolo(programmaM.getTitolo());
+            }
+            
+            if(programmaM.getDescrizione().isEmpty()){
+                programma.setDescrizione("Descrizione inesistente");
+            }else {
+                programma.setDescrizione(programmaM.getDescrizione());
+            }
             programma.setDescrizione(programmaM.getDescrizione());
             programma.setOrario(programma.getOrario());
             programma.setCategorie(programmaM.getCategorie());

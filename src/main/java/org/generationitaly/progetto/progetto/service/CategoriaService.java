@@ -32,6 +32,10 @@ public class CategoriaService {
         categoriaRepo.deleteById(id);
     }
 
+    public List<Programma> programmiDiCategoria(Long id){
+        return categoriaRepo.findProgrammiByCategoriaId(id);
+    }
+
     @Transactional
     public void deleteCategoria(Long id) {
         Categoria categoria = categoriaRepo.findById(id).orElse(null);

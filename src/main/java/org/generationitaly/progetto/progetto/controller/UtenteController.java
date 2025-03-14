@@ -59,6 +59,15 @@ public class UtenteController {
     @PostMapping("/aggiungiUtente")
     public ResponseEntity<?> salvaUtente(@RequestBody Utente utente) {
         try {
+            if (utente.getNome()==null){
+                utente.setNome("Nome inesistente");
+            }
+            if (utente.getCognome()==null){
+                utente.setCognome("Cognome inesistente");
+            }
+            if (utente.getNumero()==null){
+                utente.setNumero("Numero inesistente");
+            }
             if (utente.getProgrammiPref() != null && !utente.getProgrammiPref().isEmpty()) {
                 List<Programma> programmi = new ArrayList<>();
 
@@ -91,13 +100,21 @@ public class UtenteController {
             if (utente == null) {
                 return new ResponseEntity<>("Utente non trovato", HttpStatus.NOT_FOUND);
             }
-            if (utenteM.getNome()!=null){
+            if (!utenteM.getNome().isEmpty()){
                 utente.setNome(utenteM.getNome());
             }else{
-                utente.setNome(" ");
+                utente.setNome("Nome inesistente");
             }
+            if (!utenteM.getCognome().isEmpty()){
             utente.setCognome(utenteM.getCognome());
+            }else {
+                utente.setCognome("Cognome inesistente");
+            }
+            if (!utenteM.getNumero().isEmpty()){
             utente.setNumero(utenteM.getNumero());
+            }else {
+                utente.setNumero("Numero inesistente");
+            }
 
             // Se l'utente ha aggiornato i programmi preferiti
             if (utenteM.getProgrammiPref() != null) {

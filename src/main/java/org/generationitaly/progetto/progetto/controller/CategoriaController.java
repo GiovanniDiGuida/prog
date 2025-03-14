@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.generationitaly.progetto.progetto.entity.Categoria;
+import org.generationitaly.progetto.progetto.entity.Programma;
 import org.generationitaly.progetto.progetto.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,9 +47,22 @@ public class CategoriaController {
         }
     }
 
+    @GetMapping("/programmiCategoria/{id}")
+    public ResponseEntity<?> getProgrammiCategoria(@PathVariable Long id){
+        try {
+            List<Programma> programmiCategoria = categoriaService.programmiDiCategoria(id);
+            return ResponseEntity.ok(programmiCategoria);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/aggiungiCategoria")
     public ResponseEntity<?> aggiungiCategoria(@RequestBody Categoria categoria) {
         try {
+            if (categoria.getNomeCategoria().isEmpty()){
+                categoria.setNomeCategoria("Nome categoria inesistente");
+            }
             categoriaService.save(categoria);
             return ResponseEntity.ok(categoria);
         } catch (Exception e) {
@@ -61,7 +75,12 @@ public class CategoriaController {
     public ResponseEntity<?> modificaCategoria(@PathVariable Long id, @RequestBody Categoria categoriaM){
         try {
             Categoria categoria = categoriaService.findById(id);
-            categoria.setNomeCategoria(categoriaM.getNomeCategoria());
+            if (categoriaM.getNomeCategoria().isEmpty()){
+                categoria.setNomeCategoria("Nome categoria inesistente");
+            }else {
+                categoria.setNomeCategoria(categoriaM.getNomeCategoria());
+            }
+            
             
             categoriaService.save(categoria);
             return new ResponseEntity<>(HttpStatus.OK);

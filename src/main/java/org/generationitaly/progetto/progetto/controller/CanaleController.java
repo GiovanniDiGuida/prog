@@ -63,6 +63,9 @@ public class CanaleController {
     @PostMapping("/aggiungiCanale")
     public ResponseEntity<?> salvaCanale(@RequestBody Canale canale){
         try {
+            if (canale.getNomeCanale().isEmpty()){
+                canale.setNomeCanale("Nome canale inesistente");
+            }
             canaleService.save(canale);
             return ResponseEntity.ok(canale);
         } catch (Exception e) {
@@ -75,7 +78,13 @@ public class CanaleController {
     public ResponseEntity<?> modificaCanale(@PathVariable Long id, @RequestBody Canale canaleM){
         try {
             Canale canale = canaleService.findById(id);
-            canale.setNomeCanale(canaleM.getNomeCanale());
+            if(canaleM.getNomeCanale().isEmpty()){
+                canale.setNomeCanale("Nome canale inesistente");
+            }else{
+                canale.setNomeCanale(canaleM.getNomeCanale());
+            }
+            
+            
             
             canaleService.save(canale);
             return new ResponseEntity<>(HttpStatus.OK);
