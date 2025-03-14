@@ -31,4 +31,13 @@ public class ProgrammaService {
     public Programma save(Programma programma) {
         return programmaRepo.save(programma);
     }
+
+    public List<Programma> mostraCategoria(String nomeCategoria){
+        return programmaRepo.findByCategoriaNome(nomeCategoria);
+    }
+
+    public List<Programma> mostraCanale(String nomeCanale){
+        return programmaRepo.findByCanaleNome(nomeCanale);
+    }
+
 }

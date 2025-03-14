@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +32,29 @@ public class ProgrammaController {
         try {
             List<Programma> programmi = programmaService.findall();
             return ResponseEntity.ok(programmi);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/programmiPerCategoria/{nomeCategoria}")
+    public ResponseEntity<?> getProgrammiPerCategoria(@PathVariable String nomeCategoria){
+        try {
+            nomeCategoria=nomeCategoria + "%";
+            List<Programma> programmiPerCategoria = programmaService.mostraCategoria(nomeCategoria);
+            return ResponseEntity.ok(programmiPerCategoria);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/programmiPerCanale/{nomeCanale}")
+    public ResponseEntity<?> getProgrammiPerCanale(@PathVariable String nomeCanale){
+        try {
+            nomeCanale=nomeCanale + "%";
+            List<Programma> programmiPerCanale = programmaService.mostraCanale(nomeCanale);
+            return ResponseEntity.ok(programmiPerCanale);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
