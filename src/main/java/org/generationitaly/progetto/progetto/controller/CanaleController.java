@@ -3,6 +3,7 @@ package org.generationitaly.progetto.progetto.controller;
 import java.util.List;
 
 import org.generationitaly.progetto.progetto.entity.Canale;
+import org.generationitaly.progetto.progetto.entity.Programma;
 import org.generationitaly.progetto.progetto.service.CanaleService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,17 @@ public class CanaleController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/CanaleProgrammi/{id}")
+    public ResponseEntity<?> getProgrammiCanali(@PathVariable Long id){
+        try {
+            List<Programma> programmiCanale = canaleService.trovaProgrammiCanale(id);
+            return ResponseEntity.ok(programmiCanale);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 
     @PostMapping("/aggiungiCanale")
     public ResponseEntity<?> salvaCanale(@RequestBody Canale canale){

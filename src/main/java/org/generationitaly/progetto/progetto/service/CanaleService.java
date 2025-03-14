@@ -36,6 +36,10 @@ public class CanaleService {
         canaleRepo.deleteById(id);
     }
 
+    public List<Programma> trovaProgrammiCanale(Long id){
+        return canaleRepo.findProgrammiByCanaleId(id);
+    }
+
     @Transactional
     public void deleteCanale(Long id) {
         Canale canale = canaleRepo.findById(id).orElse(null);
