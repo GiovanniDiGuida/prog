@@ -2,7 +2,7 @@ package org.generationitaly.progetto.progetto.controller;
 
 import java.util.List;
 
-
+import org.generationitaly.progetto.progetto.dto.SearchDTO;
 import org.generationitaly.progetto.progetto.entity.Programma;
 import org.generationitaly.progetto.progetto.service.ProgrammaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class ProgrammaController {
     }
 
 
-    @GetMapping("/programmiPerCategoria/{nomeCategoria}")
-    public ResponseEntity<?> getProgrammiPerCategoria(@PathVariable String nomeCategoria){
+    @PostMapping("/programmiPerCategoria")
+    public ResponseEntity<?> getProgrammiPerCategoria(@RequestBody SearchDTO search){
         try {
-            nomeCategoria=nomeCategoria + "%";
+            String nomeCategoria="%" + search.getQuery() + "%";
             List<Programma> programmiPerCategoria = programmaService.mostraCategoria(nomeCategoria);
             return ResponseEntity.ok(programmiPerCategoria);
         } catch (Exception e) {
@@ -49,10 +49,10 @@ public class ProgrammaController {
         }
     }
 
-    @GetMapping("/programmiPerCanale/{nomeCanale}")
-    public ResponseEntity<?> getProgrammiPerCanale(@PathVariable String nomeCanale){
+    @PostMapping("/programmiPerCanale")
+    public ResponseEntity<?> getProgrammiPerCanale(@RequestBody SearchDTO search){
         try {
-            nomeCanale=nomeCanale + "%";
+            String nomeCanale="%" + search.getQuery() + "%";
             List<Programma> programmiPerCanale = programmaService.mostraCanale(nomeCanale);
             return ResponseEntity.ok(programmiPerCanale);
         } catch (Exception e) {

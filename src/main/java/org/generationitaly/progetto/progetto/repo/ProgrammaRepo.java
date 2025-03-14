@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProgrammaRepo extends JpaRepository<Programma, Long>{
     
-    @Query("SELECT p FROM Programma p JOIN p.categorie c WHERE c.nomeCategoria = :nomeCategoria")
+    @Query("SELECT p FROM Programma p JOIN p.categorie c WHERE c.nomeCategoria LIKE :nomeCategoria")
     List<Programma> findByCategoriaNome(@Param("nomeCategoria") String nomeCategoria);
 
     
-    @Query("SELECT p FROM Programma p JOIN p.canali c WHERE c.nomeCanale like  :nomeCanale")
+    @Query("SELECT p FROM Programma p JOIN p.canali c WHERE c.nomeCanale LIKE :nomeCanale")
     List<Programma> findByCanaleNome(@Param("nomeCanale") String nomeCanale);
 }
