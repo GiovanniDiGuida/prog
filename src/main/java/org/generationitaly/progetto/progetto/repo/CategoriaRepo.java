@@ -14,7 +14,7 @@ public interface CategoriaRepo extends JpaRepository<Categoria, Long> {
 
     public List<Categoria> findByNomeCategoriaLike(String nomeCategoria);
 
-    // public List<Categoria> findAllById(List<Long> id);
+    // Query per trovare i programmi di una categoria
     @Query("SELECT p FROM Categoria c JOIN c.programmi p WHERE c.id = :categoriaId ORDER BY p.orario")
     public List<Programma> findProgrammiByCategoriaId(@Param("categoriaId") Long categoriaId);
 }

@@ -14,29 +14,25 @@ import jakarta.transaction.Transactional;
 @Service
 public class CanaleService {
 
-    
-
     @Autowired
     private CanaleRepo canaleRepo;
 
     @Autowired
     private ProgrammaRepo programmaRepo;
 
-
-
-    public List<Canale> findall(){
+    public List<Canale> findall() {
         return canaleRepo.findAll();
     }
 
-    public Canale findById(Long id){
+    public Canale findById(Long id) {
         return canaleRepo.findById(id).orElse(null);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         canaleRepo.deleteById(id);
     }
 
-    public List<Programma> trovaProgrammiCanale(Long id){
+    public List<Programma> trovaProgrammiCanale(Long id) {
         return canaleRepo.findProgrammiByCanaleId(id);
     }
 
@@ -60,6 +56,4 @@ public class CanaleService {
     public Canale save(Canale canale) {
         return canaleRepo.save(canale);
     }
-
-    
 }

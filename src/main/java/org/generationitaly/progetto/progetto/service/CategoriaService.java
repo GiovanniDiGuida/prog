@@ -32,7 +32,7 @@ public class CategoriaService {
         categoriaRepo.deleteById(id);
     }
 
-    public List<Programma> programmiDiCategoria(Long id){
+    public List<Programma> programmiDiCategoria(Long id) {
         return categoriaRepo.findProgrammiByCategoriaId(id);
     }
 
@@ -40,31 +40,15 @@ public class CategoriaService {
     public void deleteCategoria(Long id) {
         Categoria categoria = categoriaRepo.findById(id).orElse(null);
 
-        // Rimuove il canale da tutti i programmi associati
+        // Rimuove la categoria da tutti i programmi associati
         for (Programma programma : categoria.getProgrammi()) {
             programma.getCategorie().remove(categoria);
         }
 
-        // Salva i programmi per aggiornare il DB
+        // Salva il programma senza categorie per aggiornare il DB
         programmaRepo.saveAll(categoria.getProgrammi());
 
-        // Ora puoi eliminare il canale
-        categoriaRepo.delete(categoria);
-    }
-
-    @Transactional
-    public void deleteCanale(Long id) {
-        Categoria categoria = categoriaRepo.findById(id).orElse(null);
-
-        // Rimuove il canale da tutti i programmi associati
-        for (Programma programma : categoria.getProgrammi()) {
-            programma.getCategorie().remove(categoria);
-        }
-
-        // Salva i programmi per aggiornare il DB
-        programmaRepo.saveAll(categoria.getProgrammi());
-
-        // Ora puoi eliminare il canale
+        // Ora puoi eliminare la categoria
         categoriaRepo.delete(categoria);
     }
 

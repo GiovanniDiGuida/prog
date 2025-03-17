@@ -5,7 +5,6 @@ import java.util.List;
 import org.generationitaly.progetto.progetto.entity.Canale;
 import org.generationitaly.progetto.progetto.entity.Programma;
 import org.generationitaly.progetto.progetto.service.CanaleService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,6 @@ public class CanaleController {
 
     @Autowired
     private CanaleService canaleService;
-
-    
 
     @GetMapping("/canali")
     public ResponseEntity<?> getCanali(){
@@ -50,7 +47,7 @@ public class CanaleController {
     }
 
     @GetMapping("/CanaleProgrammi/{id}")
-    public ResponseEntity<?> getProgrammiCanali(@PathVariable Long id){
+    public ResponseEntity<?> getProgrammiCanali(@PathVariable Long id) {
         try {
             List<Programma> programmiCanale = canaleService.trovaProgrammiCanale(id);
             return ResponseEntity.ok(programmiCanale);
@@ -58,7 +55,6 @@ public class CanaleController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 
     @PostMapping("/aggiungiCanale")
     public ResponseEntity<?> salvaCanale(@RequestBody Canale canale){
@@ -71,7 +67,6 @@ public class CanaleController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
     }
 
     @PutMapping("/modificaCanale/{id}")
@@ -83,12 +78,8 @@ public class CanaleController {
             }else{
                 canale.setNomeCanale(canaleM.getNomeCanale());
             }
-            
-            
-            
             canaleService.save(canale);
             return new ResponseEntity<>(HttpStatus.OK);
-        
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -104,5 +95,3 @@ public class CanaleController {
         }
     }
 }
-
-

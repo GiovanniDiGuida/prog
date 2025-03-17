@@ -2,7 +2,6 @@ package org.generationitaly.progetto.progetto.controller;
 
 import java.util.List;
 
-
 import org.generationitaly.progetto.progetto.entity.Categoria;
 import org.generationitaly.progetto.progetto.entity.Programma;
 import org.generationitaly.progetto.progetto.service.CategoriaService;
@@ -48,7 +47,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/programmiCategoria/{id}")
-    public ResponseEntity<?> getProgrammiCategoria(@PathVariable Long id){
+    public ResponseEntity<?> getProgrammiCategoria(@PathVariable Long id) {
         try {
             List<Programma> programmiCategoria = categoriaService.programmiDiCategoria(id);
             return ResponseEntity.ok(programmiCategoria);
@@ -60,7 +59,8 @@ public class CategoriaController {
     @PostMapping("/aggiungiCategoria")
     public ResponseEntity<?> aggiungiCategoria(@RequestBody Categoria categoria) {
         try {
-            if (categoria.getNomeCategoria()==null){
+            //controllo se il nome della categoria è vuoto
+            if (categoria.getNomeCategoria() == null) {
                 categoria.setNomeCategoria("Nome categoria inesistente");
             }
             categoriaService.save(categoria);
@@ -68,32 +68,32 @@ public class CategoriaController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
 
     @PutMapping("/modificaCategoria/{id}")
-    public ResponseEntity<?> modificaCategoria(@PathVariable Long id, @RequestBody Categoria categoriaM){
+    public ResponseEntity<?> modificaCategoria(@PathVariable Long id, @RequestBody Categoria categoriaM) {
         try {
             Categoria categoria = categoriaService.findById(id);
-            if (categoriaM.getNomeCategoria().isEmpty()){
+            //controllo se il nome della categoria è vuoto
+            if (categoriaM.getNomeCategoria().isEmpty()) {
                 categoria.setNomeCategoria("Nome categoria inesistente");
-            }else {
+            } else {
                 categoria.setNomeCategoria(categoriaM.getNomeCategoria());
             }
-            
-            
+
             categoriaService.save(categoria);
             return new ResponseEntity<>(HttpStatus.OK);
-        
+
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/eliminaCategoria/{id}")
-    public ResponseEntity<?> deleteCanale(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCategoria(@PathVariable Long id) {
         try {
-            categoriaService.deleteCanale(id);
+            categoriaService.deleteCategoria(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -17,19 +17,18 @@ import jakarta.persistence.ManyToMany;
 public class Categoria {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @Column(length = 64)
     private String nomeCategoria;
 
     @JsonBackReference("lista_categoria")
-    @ManyToMany (mappedBy = "categorie",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
     private List<Programma> programmi;
 
-    public Categoria(){
-        programmi=new ArrayList<>();
+    public Categoria() {
+        programmi = new ArrayList<>();
     }
 
     public Long getId() {

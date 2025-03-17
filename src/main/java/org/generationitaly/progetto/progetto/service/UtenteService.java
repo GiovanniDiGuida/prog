@@ -37,15 +37,15 @@ public class UtenteService {
 
         Utente utente = utenteRepo.findById(id).orElse(null);
 
-        // Rimuove il canale da tutti i programmi associati
+        // Rimuove l'associazioni con i programmi preferiti
         for (Programma programma : utente.getProgrammiPref()) {
             programma.getUtenti().remove(utente);
         }
 
-        // Salva i programmi per aggiornare il DB
+        // Salva l'utente per aggiornare il DB
         utenteRepo.save(utente);
 
-        // Ora puoi eliminare il canale
+        // Ora puoi eliminare l'utente
         utenteRepo.delete(utente);
     }
 

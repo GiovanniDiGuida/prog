@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +14,7 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Canale {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
@@ -28,7 +27,6 @@ public class Canale {
     private List<Programma> programmi;
 
     public Canale() {
-
         programmi= new ArrayList<>();
     }
 
@@ -60,6 +58,4 @@ public class Canale {
     public String toString() {
         return "Canale [id=" + id + ", nomeCanale=" + nomeCanale + ", programmi=" + programmi + "]";
     }
-
-
 }

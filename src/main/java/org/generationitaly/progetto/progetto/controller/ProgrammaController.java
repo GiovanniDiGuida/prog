@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,7 +25,7 @@ public class ProgrammaController {
 
     @Autowired
     private ProgrammaService programmaService;
- 
+
     @GetMapping("/programmi")
     public ResponseEntity<?> getProgrammi() {
         try {
@@ -36,7 +35,6 @@ public class ProgrammaController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @PostMapping("/programmiPerCategoria")
     public ResponseEntity<?> getProgrammiPerCategoria(@RequestBody SearchDTO search){
@@ -96,21 +94,17 @@ public class ProgrammaController {
             }else{
                 programma.setTitolo(programmaM.getTitolo());
             }
-            
             if(programmaM.getDescrizione().isEmpty()){
                 programma.setDescrizione("Descrizione inesistente");
             }else {
                 programma.setDescrizione(programmaM.getDescrizione());
             }
-            
             programma.setOrario(programma.getOrario());
             programma.setCategorie(programmaM.getCategorie());
             programma.setUtenti(programmaM.getUtenti());
             programma.setCanali(programmaM.getCanali());
-            
             programmaService.save(programma);
             return new ResponseEntity<>(HttpStatus.OK);
-        
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
