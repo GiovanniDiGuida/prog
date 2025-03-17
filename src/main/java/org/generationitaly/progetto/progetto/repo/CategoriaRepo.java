@@ -10,10 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoriaRepo extends JpaRepository<Categoria, Long>{
+public interface CategoriaRepo extends JpaRepository<Categoria, Long> {
+
     public List<Categoria> findByNomeCategoriaLike(String nomeCategoria);
+
     // public List<Categoria> findAllById(List<Long> id);
-    @Query("SELECT p FROM Categoria c JOIN c.programmi p WHERE c.id = :categoriaId")
+    @Query("SELECT p FROM Categoria c JOIN c.programmi p WHERE c.id = :categoriaId ORDER BY p.orario")
     public List<Programma> findProgrammiByCategoriaId(@Param("categoriaId") Long categoriaId);
 }
-
