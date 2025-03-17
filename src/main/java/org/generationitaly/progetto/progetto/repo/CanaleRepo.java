@@ -15,6 +15,6 @@ public interface CanaleRepo extends JpaRepository<Canale, Long> {
     
     //public List<Programma> findProgrammiById(Long id);
 
-    @Query("SELECT p FROM Canale c JOIN c.programmi p WHERE c.id = :canaleId")
+    @Query("SELECT p FROM Canale c JOIN c.programmi p WHERE c.id = :canaleId ORDER BY p.orario")
     List<Programma> findProgrammiByCanaleId(@Param("canaleId") Long canaleId);
 }
